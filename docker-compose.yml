@@ -1,0 +1,96 @@
+# Two deployment shapes, one codebase. The only thing that changes is OLLAMA_BASE_URL:
+#   Mac  -> http://host.docker.internal:11434  (Ollama runs natively on the host, Metal GPU)
+#   EC2  -> http://ollama:11434                (Ollama runs here, via --profile ollama)
+# Docker on macOS cannot pass through the Apple GPU, so the host-native route is the
+# only way to get Metal acceleration during local development.
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mht}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mht}
+      POSTGRES_DB: ${POSTGRES_DB:-mht}
+    ports:
+      # Loopback-bound on purpose. This published port is ONLY a side door for
+      # host-side GUI tools (TablePlus/DBeaver/psql). The pipeline never uses it -
+      # worker and notebook reach the DB as postgres:5432 on the compose network,
+      # locally and on EC2 alike. Binding 0.0.0.0 here would publish the database
+      # on every interface, which on EC2 means a public one.
+      - "127.0.0.1:${POSTGRES_PORT_HOST:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mht} -d ${POSTGRES_DB:-mht}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  worker:
+    build: .
+    image: mht-pipeline:latest
+    env_file: [.env]
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    depends_on:
+      postgres: {condition: service_healthy}
+    volumes:
+      - ${DATA_DIR:-./data}:/data:ro   # input JSONL, read-only
+      - ./out:/out                                        # parquet/csv output
+      - ./config:/app/config
+      - ./notebooks:/app/notebooks                        # so `make nb-run` can execute them headlessly
+      - ./src:/app/src                                    # live code, no rebuild while iterating
+      - ./tests:/app/tests                                # rules-layer suite (make test)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"               # parity on Linux hosts
+    # No long-running command: invoked as `docker compose run --rm worker ...` (see Makefile).
+
+  notebook:
+    build: .
+    image: mht-pipeline:latest
+    env_file: [.env]
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    depends_on:
+      postgres: {condition: service_healthy}
+    command: >
+      jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+      --allow-root --NotebookApp.token='' --NotebookApp.password=''
+    ports:
+      # Loopback only. JupyterLab runs with no token and no password, so a
+      # 0.0.0.0 bind would hand anyone on the network a Python REPL with
+      # database credentials in the environment.
+      - "127.0.0.1:${JUPYTER_PORT:-8888}:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./out:/out
+      - ./config:/app/config
+      - ./src:/app/src
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # EC2 only: `docker compose --profile ollama up -d`
+  ollama:
+    image: ollama/ollama:latest
+    profiles: [ollama]
+    # DELIBERATELY NO `ports:` MAPPING. Ollama is reachable only as ollama:11434 on the
+    # internal compose network - not from the host, not from the internet. Do not open
+    # 11434 in the EC2 security group.
+    volumes:
+      - ollama-models:/root/.ollama   # REQUIRED: without this the ~4.7GB model
+                                      # re-downloads on every `compose down`.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  ollama-models:

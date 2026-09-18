@@ -1,0 +1,33 @@
+- id: climara
+  name_must_appear: true
+  label: Climara
+  class: transdermal
+  aliases: [climara, climara patch]
+
+- id: divigel
+  name_must_appear: true
+  label: Divigel
+  class: topical
+  aliases: [divigel]
+
+- id: gel_generic
+  label: Gel (generic)
+  class: topical
+  aliases: [gel, gels, estradiol gel]
+
+- id: hrt_unspecified
+  label: HRT (unspecified)
+  class: umbrella
+  aliases: [hrt, hormones, hormone therapy]
+
+- id: black_cohosh
+  name_must_appear: true
+  label: Black cohosh
+  class: supplement
+  aliases: [black cohosh, cohosh]
+
+- id: vasomotor
+  kind: symptom
+  label: Hot flashes
+  class: vasomotor
+  aliases: [hot flashes, hot flushes, night sweats]

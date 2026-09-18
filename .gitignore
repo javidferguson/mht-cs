@@ -1,0 +1,26 @@
+# secrets / local config
+.env
+
+# generated output
+out/
+
+# input corpus - supplied separately, not part of the solution
+data/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+uv.lock
+
+# editors / os
+.idea/
+.vscode/
+.DS_Store
+
+# notebooks
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# archives
+*.zip

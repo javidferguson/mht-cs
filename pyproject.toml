@@ -1,0 +1,32 @@
+[project]
+name = "mht-pipeline"
+version = "0.1.0"
+description = "Extract a per-user treatments/symptoms/demographics data product from forum JSONL"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.9",
+    "psycopg[binary]>=3.2",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+    "rich>=13.9",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+]
+
+[project.optional-dependencies]
+notebook = ["jupyterlab>=4.2", "plotly>=5.24", "matplotlib>=3.9"]
+dev = ["pytest>=8.3"]
+
+[project.scripts]
+pipeline = "pipeline.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pipeline"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/pipeline/core/schema.sql" = "pipeline/core/schema.sql"

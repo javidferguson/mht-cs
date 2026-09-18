@@ -1,0 +1,8 @@
+member_label: test-community member
+decoys:
+  black:
+    - black cohosh
+umbrella_superseded_by:
+  hrt_unspecified:
+    - transdermal
+    - topical

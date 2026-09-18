@@ -1,0 +1,36 @@
+# Everything domain-specific that is NOT an entity definition. Point the pipeline
+# at a different drug or condition by editing this file and lexicon.yml; no Python
+# changes required.
+
+# Used in the narrative-synthesis prompt: "a profile of a <member_label>".
+member_label: menopause-community member
+
+# Surface collisions where a demographic word is really part of a product name.
+# Measured in this corpus: 92 of 101 occurrences of "black" are "black cohosh", a
+# supplement. Without this, members acquire a race they never stated.
+#   <value the model emitted>: [phrases that make it a false positive]
+decoys:
+  black:
+    - black cohosh
+
+# Umbrella entities double-count: a member who names a specific brand AND says
+# "the patch" AND says "HRT" is describing one therapy three ways. An umbrella is
+# marked `superseded` when the member also names something specific from one of
+# these classes. Nothing is dropped - the flag is carried so the notebook can
+# choose, and the raw `mentions` table is untouched.
+umbrella_superseded_by:
+  patch_unspecified:
+    - transdermal_estradiol
+  systemic_estrogen_unspecified:
+    - transdermal_estradiol
+    - topical_estradiol
+    - oral_estrogen
+    - oral_combined
+  hrt_unspecified:
+    - transdermal_estradiol
+    - topical_estradiol
+    - oral_estrogen
+    - oral_combined
+    - progestogen
+    - local_estrogen
+    - compounded

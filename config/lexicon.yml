@@ -1,0 +1,790 @@
+# Surface form -> canonical entity.
+#
+# name_must_appear: true marks a NAMED entity - one a member cannot refer to
+# without writing its name ("Climara", "ashwagandha", "gabapentin"). A mention of
+# such an entity is only accepted if its name or one of its aliases literally
+# appears in the source text; unattested ones are flagged and excluded from
+# aggregates. The same flag selects which entities the evaluation can measure
+# recall on, since their presence is objectively checkable.
+#
+# Leave it off for DESCRIBED entities - umbrellas ("HRT", "the patch"), activities
+# ("exercise", "CBT"), drug classes ("SSRI") and generic forms ("micronized
+# progesterone"). Members refer to those without ever naming anything, so
+# requiring a literal match would reject correct extractions. Tuned against the OOV report; re-running
+# `make normalize` after an edit costs nothing (no model calls).
+#
+# Matching is: exact normalised alias, then longest whole-word containment.
+# Longest-first ordering means a brand always beats its generic class, so
+# "Divigel" never collapses into "gel".
+
+# ---------------------------------------------------------------- transdermal
+- id: climara
+  name_must_appear: true
+  label: Climara (estradiol transdermal patch)
+  class: transdermal_estradiol
+  manufacturer: Bayer
+  aliases: [climara, climara patch, climara pro]
+
+- id: estradot
+  name_must_appear: true
+  label: Estradot / Vivelle-Dot (estradiol patch)
+  class: transdermal_estradiol
+  aliases: [estradot, estradot patch, vivelle, vivelle-dot, vivelle dot, minivelle,
+            evorel]
+
+- id: estradiol_patch_generic
+  label: Estradiol patch (unbranded / generic)
+  class: transdermal_estradiol
+  aliases: [estradiol patch, estrogen patch, oestrogen patch, generic estradiol patch,
+            transdermal estradiol, transdermal patch, combination patch, hrt patch,
+            estradiol transdermal]
+
+- id: patch_unspecified
+  label: Patch (brand not stated)
+  class: transdermal_estradiol
+  aliases: [patch, patches]
+
+# ----------------------------------------------------------------------- gels
+- id: divigel
+  name_must_appear: true
+  label: Divigel (estradiol gel)
+  class: topical_estradiol
+  aliases: [divigel, sandrena]
+
+- id: estrogel
+  name_must_appear: true
+  label: EstroGel / Oestrogel (estradiol gel)
+  class: topical_estradiol
+  aliases: [estrogel, oestrogel, estrogel pump]
+
+- id: estradiol_gel_generic
+  label: Estradiol gel (unbranded)
+  class: topical_estradiol
+  aliases: [estradiol gel, estrogen gel, oestrogen gel, transdermal gel, gel, gels]
+
+- id: estradiol_spray
+  name_must_appear: true
+  label: Estradiol spray (Lenzetto / Evamist)
+  class: topical_estradiol
+  aliases: [lenzetto, evamist, estradiol spray, estrogen spray, spray, sprays]
+
+# -------------------------------------------------------------- oral / systemic
+- id: activelle
+  name_must_appear: true
+  label: Activelle (estradiol + norethisterone, oral)
+  class: oral_combined
+  aliases: [activelle, activella, kliovance, kliofem]
+
+- id: oral_estradiol
+  label: Oral estradiol (Estrace / generic)
+  class: oral_estrogen
+  aliases: [oral estradiol, estrace, estradiol tablet, estradiol tablets, oral estrogen,
+            oral oestrogen, estradiol pill, oral combined pill, oral hrt, the pill form,
+            oestradiol, oral]
+
+- id: premarin
+  name_must_appear: true
+  label: Premarin (conjugated equine estrogens)
+  class: oral_estrogen
+  aliases: [premarin, conjugated equine estrogen, cee]
+
+# ------------------------------------------------------------------ progestogen
+- id: prometrium
+  name_must_appear: true
+  label: Prometrium (micronised progesterone)
+  class: progestogen
+  aliases: [prometrium]
+
+- id: utrogestan
+  name_must_appear: true
+  label: Utrogestan (micronised progesterone)
+  class: progestogen
+  aliases: [utrogestan]
+
+- id: micronized_progesterone
+  label: Micronised progesterone (brand not stated)
+  class: progestogen
+  aliases: [micronized progesterone, micronised progesterone,
+            micronized progesterone capsule, body identical progesterone, progesterone]
+
+- id: synthetic_progestin
+  label: Synthetic progestin (norethisterone, MPA, levonorgestrel)
+  class: progestogen
+  aliases: [norethisterone, norethindrone, medroxyprogesterone, provera, mpa,
+            levonorgestrel, synthetic progestin, progestin,
+            synthetic progestins, lower progestogen dose]
+
+- id: mirena
+  name_must_appear: true
+  label: Mirena (levonorgestrel IUD)
+  class: progestogen
+  aliases: [mirena, mirena coil, mirena iud, hormonal iud, kyleena]
+
+# -------------------------------------------------------------- local / vaginal
+# Brand-level ids. Collapsing these into one entity destroyed real competitive
+# signal: "Vagifem -> Estring" and "Vagifem -> Imvexxy" appeared as self-loops.
+# Group them with `class: local_estrogen` when a class-level view is wanted.
+- id: vagifem
+  name_must_appear: true
+  label: Vagifem / Vagirux (vaginal estradiol tablet)
+  class: local_estrogen
+  aliases: [vagifem, vagirux, yuvafem]
+
+- id: estring
+  name_must_appear: true
+  label: Estring (vaginal estradiol ring)
+  class: local_estrogen
+  aliases: [estring, estring ring, vaginal ring, ring]
+
+- id: imvexxy
+  name_must_appear: true
+  label: Imvexxy (vaginal estradiol insert)
+  class: local_estrogen
+  aliases: [imvexxy, imvexxa]
+
+- id: ovestin
+  name_must_appear: true
+  label: Ovestin / estriol cream
+  class: local_estrogen
+  aliases: [ovestin, estriol cream, intrarosa]
+
+- id: premarin_cream
+  name_must_appear: true
+  label: Premarin vaginal cream
+  class: local_estrogen
+  aliases: [premarin cream, premarin vaginal cream]
+
+- id: ospemifene
+  name_must_appear: true
+  label: Ospemifene (Osphena)
+  class: non_hormonal_rx
+  aliases: [ospemifene, osphena]
+
+- id: vaginal_estrogen_unspecified
+  label: Vaginal estrogen (brand not stated)
+  class: local_estrogen
+  aliases: [vaginal estrogen, vaginal oestrogen, local estrogen, local oestrogen,
+            vaginal estradiol, topical vaginal estrogen, estradiol cream,
+            compounded estradiol cream]
+
+- id: vaginal_moisturizer
+  label: Vaginal moisturiser / lubricant (non-hormonal)
+  class: non_hormonal_local
+  aliases: [revaree, replens, hyaluronic acid vaginal moisturizer, vaginal moisturizer,
+            vaginal moisturiser, lubricant, lube, coconut oil,
+            natural vaginal moisturisers, body oil]
+
+# ---------------------------------------------------------------- testosterone
+- id: testosterone
+  label: Testosterone (cream / gel)
+  class: androgen
+  aliases: [testosterone, testosterone cream, testosterone gel, androfeme, testogel]
+
+# ------------------------------------------------------ compounded / umbrella
+- id: compounded_bhrt
+  label: Compounded bioidentical HRT
+  class: compounded
+  aliases: [compounded bhrt, bhrt, bioidentical, bioidenticals, bioidentical hormones,
+            compounded hormones, compounded cream, pellets, hormone pellets, troche,
+            compounded estrogen, compounded protocol, compounded route, compounded stuff,
+            compounded prescriptions]
+
+- id: hrt_unspecified
+  label: HRT (type not stated)
+  class: umbrella
+  aliases: [hrt, mht, hormone replacement therapy, menopause hormone therapy,
+            hormone therapy, hormones, systemic hrt,
+            hormonal, transdermal]
+
+# ------------------------------------------------------------- non-hormonal Rx
+- id: fezolinetant
+  name_must_appear: true
+  label: Veozah / fezolinetant
+  class: non_hormonal_rx
+  aliases: [veozah, fezolinetant, elinzanetant, lynkuet]
+
+- id: ssri_snri
+  label: SSRI / SNRI
+  class: non_hormonal_rx
+  aliases: [ssri, ssris, snri, venlafaxine, effexor, escitalopram, lexapro, sertraline,
+            zoloft, paroxetine, citalopram, duloxetine, antidepressant, antidepressants]
+
+- id: gabapentin
+  name_must_appear: true
+  label: Gabapentin / pregabalin
+  class: non_hormonal_rx
+  aliases: [gabapentin, pregabalin, lyrica, neurontin]
+
+- id: clonidine
+  name_must_appear: true
+  label: Clonidine
+  class: non_hormonal_rx
+  aliases: [clonidine]
+
+- id: oxybutynin
+  name_must_appear: true
+  label: Oxybutynin
+  class: non_hormonal_rx
+  aliases: [oxybutynin]
+
+# ------------------------------------------------------------------ supplements
+- id: magnesium
+  name_must_appear: true
+  label: Magnesium
+  class: supplement
+  aliases: [magnesium, magnesium glycinate, magnesium citrate, mag glycinate,
+            magnesium threonate,
+            glycinate, magnesium glycinate]
+
+- id: black_cohosh
+  name_must_appear: true
+  label: Black cohosh
+  class: supplement
+  aliases: [black cohosh, remifemin, cohosh]
+
+- id: ashwagandha
+  name_must_appear: true
+  label: Ashwagandha
+  class: supplement
+  aliases: [ashwagandha, ksm-66, ksm 66]
+
+- id: vitamin_d
+  name_must_appear: true
+  label: Vitamin D
+  class: supplement
+  aliases: [vitamin d, vit d, vitamin d3, d3]
+
+- id: omega3
+  name_must_appear: true
+  label: Omega-3 / fish oil
+  class: supplement
+  aliases: [omega 3, omega-3, fish oil, cod liver oil,
+            omega-3s, omega 3s, omega-3 supplements]
+
+- id: collagen
+  name_must_appear: true
+  label: Collagen
+  class: supplement
+  aliases: [collagen, collagen peptides]
+
+- id: creatine
+  name_must_appear: true
+  label: Creatine
+  class: supplement
+  aliases: [creatine, creatine monohydrate]
+
+- id: probiotics
+  name_must_appear: true
+  label: Probiotics
+  class: supplement
+  aliases: [probiotic, probiotics]
+
+- id: red_clover
+  name_must_appear: true
+  label: Red clover / isoflavones
+  class: supplement
+  aliases: [red clover, isoflavones, soy isoflavones, phytoestrogens]
+
+- id: evening_primrose
+  name_must_appear: true
+  label: Evening primrose oil
+  class: supplement
+  aliases: [evening primrose, evening primrose oil, epo]
+
+- id: sage
+  name_must_appear: true
+  label: Sage
+  class: supplement
+  aliases: [sage, sage supplement, sage tablets]
+
+# ------------------------------------------------------------------- providers
+- id: midi_health
+  name_must_appear: true
+  label: Midi Health (telehealth)
+  class: telehealth
+  aliases: [midi, midi health,
+            winona]
+
+- id: evernow
+  name_must_appear: true
+  label: Evernow (telehealth)
+  class: telehealth
+  aliases: [evernow]
+
+- id: alloy
+  name_must_appear: true
+  label: Alloy (telehealth)
+  class: telehealth
+  aliases: [alloy, alloy health]
+
+- id: nams_provider
+  label: NAMS-certified menopause specialist
+  class: provider
+  aliases: [nams, nams-certified, menopause specialist, menopause clinic,
+            certified menopause practitioner,
+            ncmp, menopause society, menopause foundation of canada, naturopath, wellness clinic, pelvic floor pt, physio, weekly physio sessions,
+            ob-gyn, obgyn, gynaecologist, gynecologist, ent, oral medicine specialist, integrative medicine, integrative medicine specialist, vera women's health,
+            newson health, neurologist, gp, telehealth, cardiologist, dermatologist]
+
+# --------------------------------------------------------------- non-drug care
+- id: cbt
+  label: CBT / therapy
+  class: behavioural
+  aliases: [cbt, cognitive behavioural therapy, cognitive behavioral therapy, therapy,
+            therapist, counselling, counseling,
+            couples counsellor, couples counselor]
+
+- id: acupuncture
+  label: Acupuncture
+  class: complementary
+  aliases: [acupuncture, acupuncturist]
+
+- id: exercise
+  label: Exercise / strength training
+  class: lifestyle
+  aliases: [exercise, strength training, weight training, weights, lifting, yoga,
+            pilates, walking, cardio, running,
+            resistance training, pendulum exercises,
+            swimming, walking the dog]
+
+- id: diet_change
+  label: Diet change
+  class: lifestyle
+  aliases: [diet, mediterranean diet, cutting sugar, cutting alcohol, giving up alcohol,
+            reducing caffeine, low carb,
+            reducing sugar, sugar cutting, hydration, protein, flaxseed, maca powder, nettle tea, oat straw tea, peppermint tea]
+
+- id: sleep_hygiene
+  label: Sleep hygiene / cooling measures
+  class: lifestyle
+  aliases: [sleep hygiene, cooling pillow, chillow, bedjet, fan, cooling mattress,
+            cold water bottle, cooling sheets]
+
+# ==========================================================================
+# SYMPTOMS
+# ==========================================================================
+- id: vasomotor
+  label: Vasomotor symptoms (hot flashes / night sweats)
+  kind: symptom
+  class: vasomotor
+  aliases: [hot flash, hot flashes, hot flush, hot flushes, flashes, flushes,
+            night sweat, night sweats, vasomotor, vasomotor symptoms, sweats,
+            temperature regulation, overheating,
+            waves of heat, sweating through my sheets, sweating,
+            flushing, sweat]
+
+- id: insomnia
+  label: Sleep disturbance / insomnia
+  kind: symptom
+  class: sleep
+  aliases: [insomnia, sleep problems, can't sleep, cannot sleep, sleep disruption,
+            sleeplessness, waking at 3am, 3am waking, poor sleep, broken sleep,
+            trouble sleeping, disrupted sleep,
+            sleep, sleep issues, sleep problems, no sleep, early waking, early morning waking, early-morning waking, 3am wake-ups, 4am waking, sleep architecture, sleeping better, sleeping more soundly, waking up at 4:30am,
+            waking, waking up at night, waking up a lot, waking at 4am, waking at 4am every single day, waking at 4am with heart hammering, early morning waking,
+            not sleeping]
+
+- id: brain_fog
+  label: Brain fog / cognitive symptoms
+  kind: symptom
+  class: cognitive
+  aliases: [brain fog, cognitive symptoms, memory problems, memory loss, forgetfulness,
+            word finding, concentration, cognitive fog, foggy, losing words,
+            word-finding, word-finding issues, word-finding problems, word-finding struggles, word-finding blank, word substitution errors, memory issues, short term memory issues, cognitive stuff, cognitive load, cognitive overhead, fog, losing nouns, forgetting words, memory is absolute garbage, blank stare,
+            word retrieval, tip-of-the-tongue phenomenon, blanking, blanking on autumn, holding a thread of thought, short term memory stuff, cognitive offloading, prosopagnosia, brain won't stop,
+            memory stuff, cognitive changes, temple thinning]
+
+- id: mood_low
+  label: Low mood / depression
+  kind: symptom
+  class: mood
+  aliases: [depression, depressed, low mood, sadness, feeling pointless, despair,
+            hopelessness, crying, tearful,
+            flat mood, emotional flatness, loss of emotional response, mood deterioration, mood issues, mood, guilt, identity crisis, loss of identity, identity stuff,
+            grief, misery, pointlessness, emotional, dysregulation,
+            flatness, identity disruption]
+
+- id: anxiety
+  label: Anxiety
+  kind: symptom
+  class: mood
+  aliases: [anxiety, anxious, panic, panic attacks, dread, 3am anxiety, health anxiety,
+            catastrophizing, brain spirals, adrenaline surge, restlessness, cortisol spike, cortisol surge, cortisol, stress response, stress,
+            hypervigilance, frustration, generalised humming tension]
+
+- id: irritability_rage
+  label: Irritability / rage
+  kind: symptom
+  class: mood
+  aliases: [rage, irritability, irritable, anger, angry, short fuse, mood swings,
+            snapping]
+
+- id: fatigue
+  label: Fatigue / low energy
+  kind: symptom
+  class: energy
+  aliases: [fatigue, exhaustion, exhausted, tired, tiredness, low energy, no energy,
+            wiped out,
+            depleted energy, energy imbalance, body's energy going haywire,
+            energy]
+
+- id: joint_pain
+  label: Joint / muscle pain
+  kind: symptom
+  class: musculoskeletal
+  aliases: [joint pain, joint aches, achy joints, muscle pain, muscle aches, aches,
+            achy, stiffness, arthralgia,
+            joints aching, joints ache, joint stuff, joints screaming, muscle ache, myalgia, aching everywhere, shoulder pain, muscle spasm, tenderness,
+            knees screaming, achiness, soreness, everything hurts,
+            pain, shoulder, shoulder stuff, inflammation, discomfort]
+
+- id: frozen_shoulder
+  label: Frozen shoulder
+  kind: symptom
+  class: musculoskeletal
+  aliases: [frozen shoulder, adhesive capsulitis]
+
+- id: vaginal_dryness
+  label: Vaginal dryness / GSM
+  kind: symptom
+  class: genitourinary
+  aliases: [vaginal dryness, dryness, painful sex, dyspareunia, gsm,
+            genitourinary syndrome, atrophy, vaginal atrophy, discomfort during sex,
+            vagina, urogenital symptoms, pelvic pain,
+            pelvic pressure, pelvic congestion,
+            increased discharge, irritation, bladder issues]
+
+- id: libido_loss
+  label: Low libido
+  kind: symptom
+  class: genitourinary
+  aliases: [libido, low libido, loss of libido, no libido, sex drive, low sex drive,
+            libido loss,
+            low desire, loss of intimacy, desire piece,
+            intimacy issues, touch aversion, painful intercourse]
+
+- id: uti_recurrent
+  label: Recurrent UTIs
+  kind: symptom
+  class: genitourinary
+  aliases: [uti, utis, urinary tract infection, urinary tract infections, bladder infections,
+            recurrent utis]
+
+- id: bleeding_irregular
+  label: Irregular / heavy bleeding
+  kind: symptom
+  class: bleeding
+  aliases: [heavy bleeding, irregular bleeding, flooding, spotting, breakthrough bleeding,
+            heavy periods, irregular periods, flooding episode,
+            floodings, heavy and unpredictable bleeding]
+
+- id: palpitations
+  label: Heart palpitations
+  kind: symptom
+  class: cardiovascular
+  aliases: [palpitations, heart palpitations, racing heart, heart racing, arrhythmia,
+            heart fluttering, heart stuff,
+            heart palps, palps, heart pounding]
+
+- id: migraine
+  label: Migraine / headache
+  kind: symptom
+  class: neurological
+  aliases: [migraine, migraines, migraines with aura, headache, headaches, aura]
+
+- id: dizziness
+  label: Dizziness / vertigo
+  kind: symptom
+  class: neurological
+  aliases: [dizziness, dizzy, vertigo, lightheaded, light-headed]
+
+- id: skin_itch
+  label: Itchy / crawling skin (formication)
+  kind: symptom
+  class: dermatological
+  aliases: [formication, itchy skin, itching, skin crawling, crawling skin, dry skin,
+            skin changes,
+            skin irritation, skin itchiness, burning sensation, burning, electrical buzz, skin,
+            localized irritation, crawling sensation, crawling feeling across the top]
+
+- id: hair_thinning
+  label: Hair thinning / loss
+  kind: symptom
+  class: dermatological
+  aliases: [hair thinning, hair loss, thinning hair, shedding, hair shedding,
+            hair changes, hair falling out, hair is thinning]
+
+- id: weight_gain
+  label: Weight gain / body composition change
+  kind: symptom
+  class: metabolic
+  aliases: [weight gain, belly weight, belly fat, waist expansion, middle spread,
+            heavy around the middle, body composition, meno belly,
+            weight changes, weight redistribution,
+            weight issues, weight retention, visceral fat redistribution, heavy feeling around the middle,
+            midsection weight, weight]
+
+- id: bloating
+  label: Bloating
+  kind: symptom
+  class: gastrointestinal
+  aliases: [bloating, bloated, abdominal bloating]
+
+- id: breast_tenderness
+  label: Breast tenderness
+  kind: symptom
+  class: other
+  aliases: [breast tenderness, sore breasts, breast pain, tender breasts]
+
+- id: restless_legs
+  label: Restless legs
+  kind: symptom
+  class: neurological
+  aliases: [restless legs, restless leg syndrome, rls]
+
+- id: acid_reflux
+  label: Acid reflux
+  kind: symptom
+  class: gastrointestinal
+  aliases: [acid reflux, reflux, heartburn, gerd]
+
+- id: tinnitus
+  label: Tinnitus
+  kind: symptom
+  class: other
+  aliases: [tinnitus, ringing in ears,
+            ringing ears, ringing in my ears, ringing in my left ear]
+
+- id: dry_eyes
+  label: Dry eyes
+  kind: symptom
+  class: other
+  aliases: [dry eyes, dry eye,
+            eyes feeling like sandpaper, waking up with eye pain, squinting, punctal plugs,
+            preservative-free drops]
+
+# ---------------------------------------------- added from the v4 OOV report
+- id: systemic_estrogen_unspecified
+  label: Systemic estrogen (form not stated)
+  class: umbrella
+  aliases: [estradiol, estrogen, oestrogen, systemic estrogen, systemic oestrogen, systemic,
+            transdermal oestrogen, low-dose estrogen, estrogen decline, oestrogen-withdrawal]
+
+- id: urinary_incontinence
+  label: Urinary urgency / incontinence
+  kind: symptom
+  class: genitourinary
+  aliases: [urinary urgency, stress incontinence, incontinence, urinary stuff, urgency]
+
+- id: burning_mouth
+  label: Burning mouth / taste changes
+  kind: symptom
+  class: other
+  aliases: [burning mouth, burning mouth syndrome, metallic taste, taste changes, goldfish mouth]
+
+- id: paraesthesia
+  label: Tingling / numbness (paraesthesia)
+  kind: symptom
+  class: neurological
+  aliases: [tingling, tingling sensation, tingling feelings, tingling in hands, tingling in hands and feet,
+            tingling in my extremities, tingling in the extremities, tingling in the lower extremities,
+            pins and needles, pins and needles feeling, numbness, numbness in left hand,
+            numb and tingly hands, nerve stuff, neurological-type sensations,
+            menopausal paraesthesias, menopausal parasthesias, tingly fingers, numb hands, weird buzzing feeling in my arms, peripheral nerve changes, sensory disturbances, weird sensations, neural hyperreactivity, whole nervous system buzzing]
+
+- id: histamine_intolerance
+  label: Histamine intolerance / allergy flare
+  kind: symptom
+  class: immune
+  aliases: [histamine, histamine issues, histamine stuff, histamine intolerance, hives, allergies,
+            allergies flaring up, allergy symptoms, sneezing, sneezes, food sensitivities,
+            food sensitivity, new food sensitivities, sensitivity to red wine, garlic sensitivity,
+            sudden onion sensitivity, sensitivity,
+            allergic reaction, allergic-type reactions, weird new reactions to foods, overwhelming smells, feeling really off after meals]
+
+- id: cycle_changes
+  label: Cycle changes (irregular / skipped / shortened)
+  kind: symptom
+  class: bleeding
+  aliases: [irregular cycles, shortened cycles, skipped periods, cycles going haywire,
+            cycles have gone completely haywire,
+            disappearing periods, shortening cycles, occasional skipped period, cycles have gone completely feral, bleeding]
+
+- id: visual_disturbance
+  label: Visual disturbance
+  kind: symptom
+  class: neurological
+  aliases: [visual disturbance, visual disturbances, vision blurring, eye pressure sensation,
+            sudden visual disturbances, shimmering]
+
+- id: nausea
+  label: Nausea
+  kind: symptom
+  class: gastrointestinal
+  aliases: [nausea, queasy]
+
+- id: antihistamine
+  label: Antihistamines
+  class: non_hormonal_rx
+  aliases: [antihistamine, antihistamines]
+
+- id: dao_enzyme
+  name_must_appear: true
+  label: DAO enzyme supplement
+  class: supplement
+  aliases: [dao enzyme supplement, dao enzyme supplements, dao enzyme, dao]
+
+- id: iron
+  name_must_appear: true
+  label: Iron
+  class: supplement
+  aliases: [iron, iron supplements]
+
+- id: b_vitamins
+  label: B vitamins / B12
+  class: supplement
+  aliases: [b12, b vitamins, b12 deficiency, b complex]
+
+- id: zinc
+  name_must_appear: true
+  label: Zinc
+  class: supplement
+  aliases: [zinc, zinc and iron supplement]
+
+- id: quercetin
+  name_must_appear: true
+  label: Quercetin
+  class: supplement
+  aliases: [quercetin]
+
+- id: minoxidil
+  name_must_appear: true
+  label: Topical minoxidil
+  class: dermatological_rx
+  aliases: [minoxidil, topical minoxidil, topical minoxidil 5, rogaine]
+
+- id: mindfulness
+  label: Mindfulness / breathwork / meditation
+  class: behavioural
+  aliases: [meditation, mindfulness, somatic breathwork, breathwork, slow diaphragmatic breathing,
+            diaphragmatic breathing]
+
+- id: lab_testing
+  label: Lab testing / bloodwork
+  class: diagnostic
+  aliases: [bloodwork, blood work, thyroid panel, thyroid, amh, androgen levels, androgens, labs,
+            hormone panel, fsh, dhea, dhea shifts,
+            holter monitor, swan study, ferritin, ferritin level]
+
+- id: dietary_trigger
+  label: Dietary trigger avoided (alcohol / sugar / dairy / gluten)
+  class: lifestyle
+  aliases: [alcohol, wine, sugar, gluten, dairy, aged cheese]
+
+# Non-entities. Bucketed explicitly so the OOV report converges on real gaps
+# rather than re-listing these every run. Excluded from aggregates.
+- id: non_entity
+  label: Not an entity (generic reference)
+  class: non_entity
+  aliases: [perimenopause, perimenopause symptoms, symptoms, side effects, hormonal stuff,
+            breakthrough symptoms, systemic stuff, pill, checklist approach,
+            dialogue, meeting agenda, feeling human again, mood lift, everything is falling apart]
+
+# --------------------------------------------- added from the full-run OOV report
+# Patch adhesion is a named Climara question in the brief and had no entity - it
+# was landing in the OOV bucket where nobody would have seen it.
+- id: patch_adhesion
+  label: Patch adhesion / skin reaction at the site
+  kind: symptom
+  class: product_tolerability
+  aliases: [adhesion, adhesion issues, patch falling off, patch won't stick, patch not sticking,
+            peeling off, skin reaction, site reaction, patch residue, sticky residue,
+            red patch of skin, irritation at the patch site]
+
+- id: pelvic_floor_dysfunction
+  label: Pelvic floor dysfunction
+  kind: symptom
+  class: genitourinary
+  aliases: [pelvic floor dysfunction, pelvic floor issues, prolapse]
+
+- id: combined_oral_contraceptive
+  name_must_appear: true
+  label: Combined oral contraceptive
+  class: oral_combined
+  aliases: [combined oral contraceptives, combined oral preparations,
+            birth control pill, oral contraceptive]
+
+- id: spironolactone
+  name_must_appear: true
+  label: Spironolactone
+  class: non_hormonal_rx
+  aliases: [spironolactone, spiro]
+
+- id: d_mannose
+  name_must_appear: true
+  label: D-mannose
+  class: supplement
+  aliases: [d-mannose, d mannose]
+
+- id: biotin
+  name_must_appear: true
+  label: Biotin / hair supplements
+  class: supplement
+  aliases: [biotin, silica supplements, silica]
+
+- id: lions_mane
+  name_must_appear: true
+  label: Lion's mane
+  class: supplement
+  aliases: [lion's mane, lions mane, lion's mane mushroom supplement]
+
+- id: seed_oils_supplement
+  label: Seed / plant oil supplements
+  class: supplement
+  aliases: [pumpkin seed oil, rosemary oil, ground flax, castor oil packs]
+
+- id: alpha_lipoic_acid
+  name_must_appear: true
+  label: Alpha-lipoic acid
+  class: supplement
+  aliases: [ala, alpha lipoic acid, alpha-lipoic acid]
+
+- id: b6
+  name_must_appear: true
+  label: Vitamin B6
+  class: supplement
+  aliases: [b6, vitamin b6]
+
+- id: skin_eye_care
+  label: Skincare / eye drops
+  class: otc_topical
+  aliases: [cerave, systane, systane complete, eye drops, moisturiser, moisturizer,
+            clonazepam rinse]
+
+- id: menopause_app
+  label: Menopause tracking app / resource
+  class: digital
+  aliases: [balance app, dr. louise newson's balance app, menopause app]
+
+- id: dose_change
+  label: Dose change (taper / increase / stop)
+  class: regimen_change
+  aliases: [tapering, abrupt cessation, titrating up, lower dose, lower-dose topical options,
+            different formulation, dose increase, dose reduction]
+
+- id: turmeric
+  name_must_appear: true
+  label: Turmeric / curcumin
+  class: supplement
+  aliases: [turmeric, curcumin]
+
+- id: l_theanine
+  name_must_appear: true
+  label: L-theanine
+  class: supplement
+  aliases: [l-theanine, theanine]
+
+- id: caffeine
+  label: Caffeine / coffee
+  class: lifestyle
+  aliases: [coffee, caffeine, espresso]

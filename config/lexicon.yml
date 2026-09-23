@@ -146,7 +146,17 @@
   name_must_appear: true
   label: Ovestin / estriol cream
   class: local_estrogen
-  aliases: [ovestin, estriol cream, intrarosa]
+  aliases: [ovestin, estriol cream]
+
+# Intrarosa is prasterone (DHEA), NOT an estrogen - it was an alias of ovestin
+# (estriol) and that conflated two different molecules across 14 mentions from 13
+# members, including two who wrote "intrarosa (prasterone/dhea)" in full. It is the
+# more common of the two here: 13 documents to Ovestin's 8.
+- id: intrarosa
+  name_must_appear: true
+  label: Intrarosa (prasterone / vaginal DHEA)
+  class: local_dhea
+  aliases: [intrarosa, prasterone, vaginal dhea]
 
 - id: premarin_cream
   name_must_appear: true

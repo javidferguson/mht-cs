@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 880" width="1340" height="880" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect width="1340" height="880" fill="#fcfcfb"/>
+
+  <!-- ── header ─────────────────────────────────────────────────── -->
+  <text x="40" y="52" font-size="25" font-weight="600" fill="#0b0b0b">How accurate is it?</text>
+  <text x="40" y="80" font-size="14.5" fill="#52514e">Every figure below comes from one command — <tspan font-family="ui-monospace, Menlo, monospace" font-size="13.5" fill="#0b0b0b">make evaluate</tspan> — and needs no human annotation, so it re-runs in seconds on any version.</text>
+
+  <!-- ── hero tiles ─────────────────────────────────────────────── -->
+  <rect x="40" y="104" width="300" height="104" rx="10" fill="#ffffff" stroke="#2a78d6" stroke-width="1.6"/>
+  <text x="60" y="154" font-size="40" font-weight="700" fill="#1b5fa8">95.6%</text>
+  <text x="60" y="176" font-size="13.5" font-weight="600" fill="#0b0b0b">named-entity recall</text>
+  <text x="60" y="194" font-size="12" fill="#8a8984">6,515 of 6,813 document–entity pairs</text>
+
+  <rect x="360" y="104" width="300" height="104" rx="10" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="380" y="154" font-size="40" font-weight="700" fill="#0b0b0b">100%</text>
+  <text x="380" y="176" font-size="13.5" font-weight="600" fill="#0b0b0b">parse success</text>
+  <text x="380" y="194" font-size="12" fill="#8a8984">9,991 of 9,991 documents · zero failures</text>
+
+  <rect x="680" y="104" width="300" height="104" rx="10" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="700" y="154" font-size="40" font-weight="700" fill="#0b0b0b">8 / 8</text>
+  <text x="700" y="176" font-size="13.5" font-weight="600" fill="#0b0b0b">negation controls pass</text>
+  <text x="700" y="194" font-size="12" fill="#8a8984">4 that must reject, 4 that must accept</text>
+
+  <rect x="1000" y="104" width="300" height="104" rx="10" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="1020" y="154" font-size="40" font-weight="700" fill="#0b0b0b">0.47%</text>
+  <text x="1020" y="176" font-size="13.5" font-weight="600" fill="#0b0b0b">names found nowhere in the text</text>
+  <text x="1020" y="194" font-size="12" fill="#8a8984">30 of 6,320 mentions of scored entities</text>
+
+  <!-- ══ left column — the measurements ═══════════════════════════ -->
+  <text x="40" y="250" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">WHAT IS MEASURED</text>
+  <line x1="40" y1="260" x2="700" y2="260" stroke="#d8d7d2" stroke-width="1"/>
+
+  <text x="40"  y="286" font-size="13.5" fill="#0b0b0b">Documents extracted</text>
+  <text x="700" y="286" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">9,991 / 9,991</text>
+  <line x1="40" y1="298" x2="700" y2="298" stroke="#ecebe6"/>
+
+  <text x="40"  y="322" font-size="13.5" fill="#0b0b0b">Schema-valid JSON returned</text>
+  <text x="700" y="322" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">100.00%</text>
+  <line x1="40" y1="334" x2="700" y2="334" stroke="#ecebe6"/>
+
+  <rect x="34" y="342" width="672" height="30" rx="5" fill="#eef4fd"/>
+  <text x="40"  y="362" font-size="13.5" font-weight="600" fill="#0b0b0b">Named-entity recall — 34 entities</text>
+  <text x="700" y="362" font-size="13.5" font-weight="700" fill="#1b5fa8" text-anchor="end" font-family="ui-monospace, Menlo, monospace">95.6%</text>
+
+  <text x="40"  y="398" font-size="13.5" fill="#0b0b0b">Names in neither the document nor its parent</text>
+  <text x="700" y="398" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">30</text>
+  <line x1="40" y1="410" x2="700" y2="410" stroke="#ecebe6"/>
+
+  <text x="40"  y="434" font-size="13.5" fill="#0b0b0b">Negation &amp; demographic controls</text>
+  <text x="700" y="434" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">8 / 8</text>
+  <line x1="40" y1="446" x2="700" y2="446" stroke="#ecebe6"/>
+
+  <text x="40"  y="470" font-size="13.5" fill="#0b0b0b">Mentions mapped to a lexicon entity</text>
+  <text x="700" y="470" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">88.5%</text>
+  <line x1="40" y1="482" x2="700" y2="482" stroke="#ecebe6"/>
+
+  <text x="40"  y="506" font-size="13.5" fill="#0b0b0b">Mentions carrying a quoted context</text>
+  <text x="700" y="506" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">98.5%</text>
+  <line x1="40" y1="518" x2="700" y2="518" stroke="#ecebe6"/>
+
+  <text x="40"  y="542" font-size="13.5" fill="#0b0b0b">Surface forms collapsed to entities</text>
+  <text x="700" y="542" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">3,159 → 110   (28.7 : 1)</text>
+  <line x1="40" y1="554" x2="700" y2="554" stroke="#ecebe6"/>
+
+  <text x="40"  y="578" font-size="13.5" fill="#0b0b0b">Same 50 documents, extracted 3× — agreement on entities</text>
+  <text x="700" y="578" font-size="13.5" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, Menlo, monospace">1.000 Jaccard</text>
+  <text x="40"  y="596" font-size="11.5" fill="#8a8984">perfect. Greedy decoding at temperature=0 — determinism is a setting, not a hope.</text>
+  <text x="40"  y="612" font-size="11.5" fill="#8a8984">Raw surface forms already score 0.997, so this measures determinism, not the value of</text>
+  <text x="40"  y="628" font-size="11.5" fill="#8a8984">canonicalisation — that case rests on the 28.7 : 1 collapse above.</text>
+
+  <!-- weakest entities, stated rather than buried -->
+  <rect x="40" y="646" width="660" height="66" rx="8" fill="#f7f6f3" stroke="#e0dfd9"/>
+  <text x="58" y="667" font-size="12.5" font-weight="600" fill="#0b0b0b">Where it is weakest</text>
+  <text x="58" y="686" font-size="12.5" fill="#52514e">Telehealth brands read as ordinary words in running text: <tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">evernow</tspan> 71%, <tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">midi_health</tspan> 71%.</text>
+  <text x="58" y="703" font-size="12.5" fill="#52514e">All 30 unsupported names are one entity — <tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">black_cohosh</tspan>, the known decoy case.</text>
+
+  <!-- ══ right column ═════════════════════════════════════════════ -->
+  <text x="740" y="250" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">HOW RECALL IS SCORED WITHOUT ANNOTATION</text>
+  <line x1="740" y1="260" x2="1300" y2="260" stroke="#d8d7d2" stroke-width="1"/>
+
+  <text x="740" y="288" font-size="13.5" fill="#52514e">A <tspan font-weight="600" fill="#0b0b0b">named</tspan> entity has no casual synonym. You either write</text>
+  <text x="740" y="308" font-size="13.5" fill="#52514e">“Climara” or you do not refer to it at all — unlike “the patch”,</text>
+  <text x="740" y="328" font-size="13.5" fill="#52514e">“my hormones” or “exercise”, which have a dozen phrasings.</text>
+
+  <rect x="740" y="344" width="560" height="74" rx="8" fill="#ffffff" stroke="#2a78d6" stroke-width="1.4"/>
+  <text x="758" y="366" font-size="12.5" font-weight="600" fill="#0b0b0b">So the gold standard is a string search:</text>
+  <text x="758" y="386" font-size="12.5" fill="#52514e">for every document whose own text contains the name,</text>
+  <text x="758" y="404" font-size="12.5" fill="#52514e">did the extraction emit that entity? 6,813 pairs, zero labelling.</text>
+
+  <text x="740" y="444" font-size="12.5" fill="#52514e">The entity list is derived from the lexicon, not hand-written, so</text>
+  <text x="740" y="462" font-size="12.5" fill="#52514e">swapping <tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">lexicon.yml</tspan> for a different drug or disease carries the</text>
+  <text x="740" y="480" font-size="12.5" fill="#52514e">evaluation with it. Nothing here is specific to this corpus.</text>
+
+  <!-- not measured -->
+  <text x="740" y="524" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">WHAT IS NOT MEASURED</text>
+  <line x1="740" y1="534" x2="1300" y2="534" stroke="#d8d7d2" stroke-width="1"/>
+
+  <rect x="740" y="546" width="560" height="148" rx="8" fill="#fdf0e9" stroke="#f0c4ab"/>
+  <text x="758" y="570" font-size="13" font-weight="600" fill="#0b0b0b">Three model-derived fields carry no accuracy number.</text>
+  <circle cx="765" cy="592" r="3" fill="#eb6834"/>
+  <text x="778" y="597" font-size="12.5" fill="#52514e"><tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">sentiment</tspan> — is “positive” about this treatment correct?</text>
+  <circle cx="765" cy="616" r="3" fill="#eb6834"/>
+  <text x="778" y="621" font-size="12.5" fill="#52514e"><tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">switch direction</tspan> — is from/to the right way round?</text>
+  <circle cx="765" cy="640" r="3" fill="#eb6834"/>
+  <text x="778" y="645" font-size="12.5" fill="#52514e"><tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5">stance</tspan> — current vs past vs considering</text>
+  <text x="758" y="672" font-size="12.5" fill="#52514e">Each needs human annotation. Recall and the controls do not,</text>
+  <text x="758" y="688" font-size="12.5" fill="#52514e">which is exactly why those are the numbers on this slide.</text>
+
+  <!-- ── footer ──────────────────────────────────────────────────── -->
+  <line x1="40" y1="726" x2="1300" y2="726" stroke="#e8e7e2" stroke-width="1"/>
+  <text x="40" y="752" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">REPRODUCE IT</text>
+  <rect x="40" y="766" width="330" height="40" rx="7" fill="#f2f1ed" stroke="#d8d7d2"/>
+  <text x="58" y="791" font-size="14" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">make evaluate</text>
+  <text x="390" y="783" font-size="12.5" fill="#52514e">Prints every figure above as a table. No model calls — it reads the</text>
+  <text x="390" y="800" font-size="12.5" fill="#52514e">stored extractions, so it is free and takes seconds.</text>
+
+  <rect x="900" y="766" width="400" height="40" rx="7" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="918" y="782" font-size="12" fill="#8a8984">llama3.1:8b · prompt v7 · lexicon 46a8b905c4eb</text>
+  <text x="918" y="798" font-size="12" fill="#8a8984">9,991 documents · 5h45m · 0.48 docs/s on an M5 Max</text>
+
+  <text x="40" y="838" font-size="12" fill="#8a8984">The stability figure comes from <tspan font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="#52514e">make stability</tspan>, which re-extracts a sample several times — the only check here that spends model calls (150 for the run above).</text>
+</svg>

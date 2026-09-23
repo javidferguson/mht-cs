@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 638" width="900" height="638" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect width="900" height="638" fill="#fcfcfb"/>
+
+  <text x="40" y="52" font-size="26" font-weight="600" fill="#0b0b0b">What is measured</text>
+  <text x="40" y="78" font-size="14.5" fill="#52514e">9,991 documents · llama3.1:8b · prompt v7 · lexicon 46a8b905c4eb</text>
+
+  <line x1="40" y1="110" x2="860" y2="110" stroke="#d8d7d2" stroke-width="1.2"/>
+
+  <text x="40"  y="150" font-size="17" fill="#0b0b0b">Documents extracted</text>
+  <text x="860" y="150" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">9,991 / 9,991</text>
+  <line x1="40" y1="166" x2="860" y2="166" stroke="#ecebe6"/>
+
+  <text x="40"  y="192" font-size="17" fill="#0b0b0b">Schema-valid JSON returned</text>
+  <text x="860" y="192" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">100.00%</text>
+  <line x1="40" y1="208" x2="860" y2="208" stroke="#ecebe6"/>
+
+  <rect x="32" y="216" width="836" height="38" rx="5" fill="#eef4fd"/>
+  <text x="40"  y="241" font-size="17" font-weight="600" fill="#0b0b0b">Named-entity recall — 34 entities, 6,813 pairs</text>
+  <text x="860" y="241" font-size="17" font-weight="700" fill="#1b5fa8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">95.6%</text>
+  <text x="40"  y="272" font-size="13.5" fill="#8a8984">the 34 of 113 lexicon entities with a single distinctive name that occurs in this corpus</text>
+  <line x1="40" y1="286" x2="860" y2="286" stroke="#ecebe6"/>
+
+  <text x="40"  y="312" font-size="17" fill="#0b0b0b">Names in neither the document nor its parent</text>
+  <text x="860" y="312" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">30</text>
+  <text x="40"  y="336" font-size="13.5" fill="#8a8984">0.47% of the 6,320 mentions of scored entities; all 30 are one entity, black_cohosh</text>
+  <line x1="40" y1="350" x2="860" y2="350" stroke="#ecebe6"/>
+
+  <text x="40"  y="378" font-size="17" fill="#0b0b0b">Negation &amp; demographic controls</text>
+  <text x="860" y="378" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">8 / 8</text>
+  <line x1="40" y1="394" x2="860" y2="394" stroke="#ecebe6"/>
+
+  <text x="40"  y="420" font-size="17" fill="#0b0b0b">Mentions mapped to a lexicon entity</text>
+  <text x="860" y="420" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">88.5%</text>
+  <line x1="40" y1="436" x2="860" y2="436" stroke="#ecebe6"/>
+
+  <text x="40"  y="462" font-size="17" fill="#0b0b0b">Mentions carrying a quoted context</text>
+  <text x="860" y="462" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">98.5%</text>
+  <line x1="40" y1="478" x2="860" y2="478" stroke="#ecebe6"/>
+
+  <text x="40"  y="504" font-size="17" fill="#0b0b0b">Surface forms collapsed to entities</text>
+  <text x="860" y="504" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">3,159 → 110  (28.7 : 1)</text>
+  <line x1="40" y1="520" x2="860" y2="520" stroke="#ecebe6"/>
+
+  <text x="40"  y="546" font-size="17" fill="#0b0b0b">Same 50 documents, extracted 3× — agreement</text>
+  <text x="860" y="546" font-size="17" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">1.000 Jaccard</text>
+  <text x="40"  y="570" font-size="13.5" fill="#8a8984">raw surface forms score 0.997 on the same sample — decoding is greedy at temperature=0</text>
+  <line x1="40" y1="584" x2="860" y2="584" stroke="#d8d7d2" stroke-width="1.2"/>
+
+  <text x="40" y="614" font-size="14" fill="#8a8984">Produced by <tspan font-family="ui-monospace, Menlo, monospace" font-size="13.5" fill="#52514e">make evaluate</tspan> and <tspan font-family="ui-monospace, Menlo, monospace" font-size="13.5" fill="#52514e">make stability</tspan>.</text>
+</svg>

@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 880" width="1340" height="880" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8984"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#52514e"/>
+    </marker>
+  </defs>
+
+  <rect width="1340" height="880" fill="#fcfcfb"/>
+
+  <!-- ── header ────────────────────────────────────────────────────── -->
+  <text x="40" y="52" font-size="25" font-weight="600" fill="#0b0b0b">Forum text → a per-member structured dataset</text>
+  <text x="40" y="80" font-size="14.5" fill="#52514e">One LLM call per document. Everything after it is deterministic and re-runnable for free.</text>
+
+  <!-- legend -->
+  <rect x="946" y="34" width="14" height="14" rx="3" fill="#eb6834"/>
+  <text x="968" y="46" font-size="13" fill="#52514e">model</text>
+  <rect x="1046" y="34" width="14" height="14" rx="3" fill="#2a78d6"/>
+  <text x="1068" y="46" font-size="13" fill="#52514e">deterministic — no model</text>
+
+  <!-- column headings -->
+  <text x="40"  y="126" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">STAGE</text>
+  <text x="330" y="126" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">WHAT RUNS</text>
+  <text x="792" y="126" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">TABLES WRITTEN</text>
+  <line x1="40" y1="136" x2="1300" y2="136" stroke="#e8e7e2" stroke-width="1"/>
+
+  <!-- ── input ─────────────────────────────────────────────────────── -->
+  <rect x="40" y="154" width="700" height="46" rx="8" fill="#f2f1ed" stroke="#d8d7d2"/>
+  <text x="60" y="176" font-size="14.5" font-weight="600" fill="#0b0b0b">data/*.jsonl</text>
+  <text x="60" y="193" font-size="12.5" fill="#52514e">2,001 posts + 7,990 replies · 100 authors · 6.76M characters</text>
+  <text x="560" y="182" font-size="12.5" fill="#8a8984">configurable path</text>
+  <line x1="120" y1="200" x2="120" y2="228" stroke="#52514e" stroke-width="1.6" marker-end="url(#ab)"/>
+
+  <!-- ══ 1 ingest ══════════════════════════════════════════════════ -->
+  <rect x="40" y="232" width="250" height="56" rx="8" fill="#ffffff" stroke="#2a78d6" stroke-width="1.6"/>
+  <circle cx="68" cy="260" r="13" fill="#2a78d6"/>
+  <text x="68" y="265" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="90" y="257" font-size="15" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">ingest</text>
+  <text x="90" y="275" font-size="12" fill="#8a8984">idempotent · re-run is a no-op</text>
+  <text x="330" y="256" font-size="13.5" fill="#52514e">Parse JSONL, hash each document, queue one job per row.</text>
+  <text x="330" y="276" font-size="13.5" fill="#52514e">Reply → parent link kept for integrity, never grouped on.</text>
+  <line x1="752" y1="260" x2="784" y2="260" stroke="#8a8984" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="792" y="240" width="230" height="40" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="257" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">documents</text>
+  <text x="808" y="272" font-size="12" fill="#52514e">9,991 rows</text>
+  <rect x="1034" y="240" width="200" height="40" rx="6" fill="#f5f4f0" stroke="#e0dfd9"/>
+  <text x="1050" y="257" font-size="13.5" font-weight="600" fill="#52514e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">jobs</text>
+  <text x="1050" y="272" font-size="12" fill="#8a8984">9,991 · the work queue</text>
+  <line x1="120" y1="288" x2="120" y2="316" stroke="#52514e" stroke-width="1.6" marker-end="url(#ab)"/>
+
+  <!-- ══ 2 extract ═════════════════════════════════════════════════ -->
+  <rect x="40" y="320" width="250" height="56" rx="8" fill="#ffffff" stroke="#eb6834" stroke-width="1.6"/>
+  <circle cx="68" cy="348" r="13" fill="#eb6834"/>
+  <text x="68" y="353" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="90" y="345" font-size="15" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">extract</text>
+  <text x="90" y="363" font-size="12" fill="#eb6834">the only bulk model step</text>
+  <text x="330" y="344" font-size="13.5" fill="#52514e"><tspan font-weight="600" fill="#0b0b0b">One call per document</tspan>, 8 in parallel. JSON Schema forces the</text>
+  <text x="330" y="364" font-size="13.5" fill="#52514e">shape; <tspan font-family="ui-monospace, Menlo, monospace" font-size="12.5">temperature=0</tspan> makes a re-run byte-identical.</text>
+  <line x1="752" y1="348" x2="784" y2="348" stroke="#8a8984" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="792" y="328" width="442" height="40" rx="6" fill="#fdf0e9" stroke="#f6d3c0"/>
+  <text x="808" y="345" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">extractions</text>
+  <text x="808" y="360" font-size="12" fill="#52514e">20,656 · keyed by document + prompt version + model — versions coexist</text>
+  <line x1="120" y1="376" x2="120" y2="404" stroke="#52514e" stroke-width="1.6" marker-end="url(#ab)"/>
+
+  <!-- ══ 3 normalize ═══════════════════════════════════════════════ -->
+  <rect x="40" y="408" width="250" height="132" rx="8" fill="#ffffff" stroke="#2a78d6" stroke-width="1.6"/>
+  <circle cx="68" cy="436" r="13" fill="#2a78d6"/>
+  <text x="68" y="441" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="90" y="433" font-size="15" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">normalize</text>
+  <text x="90" y="451" font-size="12" fill="#8a8984">truncate + rebuild, ~70s</text>
+  <text x="62" y="478" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="0.8">RULES LAYER</text>
+  <text x="62" y="497" font-size="12.5" fill="#52514e" font-family="ui-monospace, Menlo, monospace">lexicon · negation</text>
+  <text x="62" y="514" font-size="12.5" fill="#52514e" font-family="ui-monospace, Menlo, monospace">context · guards</text>
+  <text x="62" y="531" font-size="11.5" fill="#8a8984">133 unit tests</text>
+
+  <text x="330" y="432" font-size="13.5" fill="#52514e">Map each surface to a stable <tspan font-family="ui-monospace, Menlo, monospace" font-size="12.5">canonical_id</tspan> (112 entities,</text>
+  <text x="330" y="452" font-size="13.5" fill="#52514e">875 aliases). Quote ±130 chars around it as evidence.</text>
+  <text x="330" y="472" font-size="13.5" fill="#52514e">Drop negated claims. Correct who the mention is about.</text>
+  <text x="330" y="500" font-size="12.5" fill="#8a8984" font-style="italic">Tune the lexicon and re-run: costs nothing, calls no model.</text>
+
+  <line x1="752" y1="474" x2="784" y2="474" stroke="#8a8984" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="792" y="410" width="442" height="38" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="426" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">mentions</text>
+  <text x="808" y="441" font-size="12" fill="#52514e">36,554 · one row per treatment or symptom named, with its quote</text>
+  <rect x="792" y="455" width="442" height="38" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="471" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">switch_events</text>
+  <text x="808" y="486" font-size="12" fill="#52514e">405 · directed edges: moved from X to Y, and the stated reason</text>
+  <rect x="792" y="500" width="442" height="38" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="516" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">demographic_claims</text>
+  <text x="808" y="531" font-size="12" fill="#52514e">5,462 · age, location, profession — only where self-stated</text>
+  <line x1="120" y1="540" x2="120" y2="568" stroke="#52514e" stroke-width="1.6" marker-end="url(#ab)"/>
+
+  <!-- ══ 4 profile ═════════════════════════════════════════════════ -->
+  <rect x="40" y="572" width="250" height="56" rx="8" fill="#ffffff" stroke="#2a78d6" stroke-width="1.6"/>
+  <circle cx="68" cy="600" r="13" fill="#2a78d6"/>
+  <text x="68" y="605" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+  <text x="90" y="597" font-size="15" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">profile</text>
+  <text x="90" y="615" font-size="12" fill="#8a8984">+ 100 model calls</text>
+  <text x="330" y="596" font-size="13.5" fill="#52514e">Roll up by <tspan font-family="ui-monospace, Menlo, monospace" font-size="12.5">(author_id, canonical_id)</tspan> — latest stance wins.</text>
+  <text x="330" y="616" font-size="13.5" fill="#52514e">One extra model call per member writes a prose summary.</text>
+  <line x1="752" y1="600" x2="784" y2="600" stroke="#8a8984" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="792" y="574" width="442" height="24" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="591" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">user_profiles<tspan font-family="-apple-system, sans-serif" font-weight="400" font-size="12" fill="#52514e">   100 · one row per member — the deliverable</tspan></text>
+  <rect x="792" y="604" width="442" height="24" rx="6" fill="#eef4fd" stroke="#c7ddf8"/>
+  <text x="808" y="621" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">treatment_summary<tspan font-family="-apple-system, sans-serif" font-weight="400" font-size="12" fill="#52514e">   77 · one row per treatment</tspan></text>
+  <line x1="120" y1="628" x2="120" y2="656" stroke="#52514e" stroke-width="1.6" marker-end="url(#ab)"/>
+
+  <!-- ══ 5 export ══════════════════════════════════════════════════ -->
+  <rect x="40" y="660" width="250" height="56" rx="8" fill="#ffffff" stroke="#2a78d6" stroke-width="1.6"/>
+  <circle cx="68" cy="688" r="13" fill="#2a78d6"/>
+  <text x="68" y="693" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+  <text x="90" y="685" font-size="15" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">export</text>
+  <text x="90" y="703" font-size="12" fill="#8a8984">immutable snapshot</text>
+  <text x="330" y="684" font-size="13.5" fill="#52514e">Six tables written twice — Parquet for analysis, CSV for</text>
+  <text x="330" y="704" font-size="13.5" fill="#52514e">everyone else — plus a manifest of model, prompt and lexicon.</text>
+  <line x1="752" y1="688" x2="784" y2="688" stroke="#8a8984" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="792" y="666" width="442" height="44" rx="6" fill="#f2f1ed" stroke="#d8d7d2"/>
+  <text x="808" y="684" font-size="13.5" font-weight="600" fill="#0b0b0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">out/&lt;run_id&gt;/</text>
+  <text x="808" y="700" font-size="12" fill="#52514e">13 files · 6 tables × Parquet + CSV · manifest.json</text>
+
+  <!-- ── footer: where it runs + the guarantee ──────────────────────── -->
+  <line x1="40" y1="748" x2="1300" y2="748" stroke="#e8e7e2" stroke-width="1"/>
+  <text x="40" y="776" font-size="11.5" font-weight="600" fill="#8a8984" letter-spacing="1.1">WHERE IT RUNS</text>
+  <rect x="40" y="790" width="150" height="46" rx="8" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="58" y="810" font-size="13.5" font-weight="600" fill="#0b0b0b">worker</text>
+  <text x="58" y="826" font-size="11.5" fill="#8a8984">python 3.13</text>
+  <rect x="206" y="790" width="150" height="46" rx="8" fill="#ffffff" stroke="#d8d7d2"/>
+  <text x="224" y="810" font-size="13.5" font-weight="600" fill="#0b0b0b">postgres 17</text>
+  <text x="224" y="826" font-size="11.5" fill="#8a8984">also the job queue</text>
+  <rect x="372" y="790" width="208" height="46" rx="8" fill="#ffffff" stroke="#eb6834"/>
+  <text x="390" y="810" font-size="13.5" font-weight="600" fill="#0b0b0b">ollama · llama3.1:8b</text>
+  <text x="390" y="826" font-size="11.5" fill="#8a8984">host on macOS · container on EC2</text>
+  <text x="600" y="808" font-size="12.5" fill="#8a8984">Docker on macOS cannot reach the Apple GPU, so</text>
+  <text x="600" y="825" font-size="12.5" fill="#8a8984">Ollama runs natively and the worker dials out.</text>
+
+  <rect x="960" y="776" width="340" height="76" rx="8" fill="#f2f1ed" stroke="#d8d7d2"/>
+  <text x="978" y="798" font-size="13" font-weight="600" fill="#0b0b0b">Stages 3–5 re-run for free.</text>
+  <text x="978" y="817" font-size="12.5" fill="#52514e">Every extraction is retained per prompt</text>
+  <text x="978" y="832" font-size="12.5" fill="#52514e">version, so the whole data product</text>
+  <text x="978" y="847" font-size="12.5" fill="#52514e">rebuilds in ~70s with no model calls.</text>
+</svg>
